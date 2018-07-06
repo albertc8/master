@@ -1,9 +1,15 @@
 import com.albertc8.database.SQLConnectionURL;
+import com.albertc8.login.*;
 import com.albertc8.vehicles.*;
+
+import java.awt.EventQueue;
 import java.sql.*;
 
 public class Main {
 	
+	/**
+	 * Launch the application.
+	 */
 	public static void main(String args[]) {		
 		
 		System.out.println("*** Hello World, Welcome to Evo Dealer Management System ***");
@@ -32,7 +38,7 @@ public class Main {
 		if (conn != null) {
 			
 			System.out.println("Establish connection to SQL server database");
-			
+						
 			try {
 				// Create and execute an SQL statement that returns some data.
 				String SQL = "SELECT TOP 10 * FROM vehicle";
@@ -46,6 +52,19 @@ public class Main {
 			} catch(SQLException ex) {
 				ex.printStackTrace();
 			}
-		}	
+		}
+		
+		Login login = new Login(); // model
+				
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					LoginView loginView = new LoginView("Log in", login);
+					loginView.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 }

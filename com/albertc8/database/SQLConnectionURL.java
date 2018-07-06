@@ -34,24 +34,24 @@ public class SQLConnectionURL {
 	 */
 	private boolean isConnected() {
 		
-		if (conn != null) {
-			
-			try {
-				// Already an connection
-				DatabaseMetaData dm = (DatabaseMetaData) conn.getMetaData();
-				System.out.println("Driver name: " + dm.getDriverName());
-				System.out.println("Driver version: " + dm.getDriverVersion());
-				System.out.println("Product name: " + dm.getDatabaseProductName());
-				System.out.println("Product version: " + dm.getDatabaseProductVersion());
-			} catch(SQLException ex) {
-				ex.printStackTrace();
-			}
-			
-			return true;
-			
-		} else {
-			return false;
-		}			
+		return conn != null ? true : false;		
+	}
+	
+	/*
+	 * print the MS SQL server connections details
+	 */
+	private void printConnectionDetails() {
+		
+		try {
+			// Already an connection
+			DatabaseMetaData dm = (DatabaseMetaData) conn.getMetaData();
+			System.out.println("Driver name: " + dm.getDriverName());
+			System.out.println("Driver version: " + dm.getDriverVersion());
+			System.out.println("Product name: " + dm.getDatabaseProductName());
+			System.out.println("Product version: " + dm.getDatabaseProductVersion());
+		} catch(SQLException ex) {
+			ex.printStackTrace();
+		}		
 	}
 	
 	/*
@@ -72,7 +72,9 @@ public class SQLConnectionURL {
 			    // Establish the connection.
 				Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 				conn = DriverManager.getConnection(connectionUrl,"","");
-								
+				
+				printConnectionDetails();
+				
 	        } catch (Exception ex) {
 	            ex.printStackTrace();
 	        }

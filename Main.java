@@ -13,7 +13,7 @@ public class Main {
 	public static void main(String args[]) {		
 		
 		System.out.println("*** Hello World, Welcome to Evo Dealer Management System ***");
-		
+				
 		// Creating a Stock Vehicle		
 		Stock stock = new Stock("Ford", "Ka", "2.0 Eco Sport");
 		// Set the Chassis
@@ -54,12 +54,13 @@ public class Main {
 			}
 		}
 		
-		Login login = new Login(); // model
+		Login login = new Login(); // MODEL
 				
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LoginView loginView = new LoginView("Log in", login);
+					// Display the login screen
+					LoginView loginView = new LoginView("Log in", login); // VIEW
 					loginView.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

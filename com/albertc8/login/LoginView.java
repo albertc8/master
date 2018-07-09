@@ -71,12 +71,32 @@ public class LoginView extends JFrame {
 		textPassword.setColumns(10);
 		
 		JButton btnSubmit = new JButton("Submit");
-		btnSubmit.addActionListener(new AddSubmitButtonAction(login, this,
-				textUsername.getText(),textPassword.getText()) {			
+		btnSubmit.addActionListener(new AddSubmitButtonAction(login, this) {
 		});
 		contentPane.add(btnSubmit, "6, 10, left, default");
-			
-	}	
+	}
+	
+	/*
+	 * Get the username text
+	 */
+	public String getUsername() {
+		
+		return textUsername.getText();
+	}
+	
+	/*
+	 * Get the password text
+	 */
+	public String getPassword() {
+		
+		return textPassword.getText();
+	}
+		
+	public void updateView() {
+		
+		// Close login window
+		System.exit(0);
+	}
 	
 }
 

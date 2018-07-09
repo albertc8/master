@@ -5,13 +5,25 @@
 
 package com.albertc8.login;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import com.albertc8.database.SQLConnectionURL;
+
 public class Login {
+	
+	// TODO - these needs to be moved to a parameter table
+	private final String server = "DESKTOP-T4119UA";
+	private final String instance = "SQLEXPRESS";
+	private final String database = "DMSDB";
 	
 	private String username;
 	private String password;
 	
 	private String errMesg;
-	
+		
 	public Login() {
 		
 	}
@@ -35,6 +47,8 @@ public class Login {
 			return false;
 		}
 		
+		// There could be more validate required on the user name
+		
 		return true;
 	}
 	
@@ -48,6 +62,8 @@ public class Login {
 			return false;
 		}
 		
+		// There could be more validation on the password
+		
 		return true;
 	}
 	
@@ -56,10 +72,47 @@ public class Login {
 	 */	
 	private boolean validateLoginDetails() {
 		
+		SQLConnectionURL sqlConnectionURL = null; // MS SQL URL
+		Connection conn = null; // SQL connection
+		Statement stmt = null; // SQL query statement
+		ResultSet rs = null; // Read SQL results
+				
+		boolean validLogin = false; // Flag if user name is found in users table
+				
+		if (sqlConnectionURL == null) {
+			// Create the connection
+			sqlConnectionURL = new SQLConnectionURL(server, instance, database);
+		} 
+		
 		// Query the MS SQL users table
+		conn = sqlConnectionURL.openConnection();
+				
+		if (conn != null) {
+			
+			try { 
+				// Create and execute an SQL statement that returns some data.
+				String SQL = "Select userid, password from users where userid like '" + username + "'";
+				stmt = conn.createStatement();
+				rs = stmt.executeQuery(SQL);
+								
+				// Iterate through the data in the result set and display it.
+	    		while (rs.next()) {
+	    			//Ensure we have the correct user record
+	    			if (rs.getString(1).equalsIgnoreCase(username) && rs.getString(2).matches(password)) {
+	    				validLogin = true;	    					    				
+	    			}
+	    			break;	    			
+	    		}
+			} catch(SQLException ex) {
+				ex.printStackTrace();			
+			}			
+		}
 		
-		
-		return true;
+		if (!validLogin) {
+			errMesg = "Incorrect username and password combination";
+		}
+					
+		return validLogin;
 	}
 	
 	/*
@@ -82,7 +135,9 @@ public class Login {
 		}
 		
 		// valid the username and password combination
-		
+		if (!validateLoginDetails()) {
+			return false;
+		}
 		
 		return true;
 	}

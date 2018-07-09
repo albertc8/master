@@ -60,9 +60,7 @@ public class SQLConnectionURL {
 	public Connection openConnection() {
 		
 		// Check if there is already connected
-		if (isConnected()) {
-			return null;
-		} else {
+		if (!isConnected()) {			
 		
 			// Create a variable for the connection string.
 			String connectionUrl = buildURL();
@@ -77,10 +75,11 @@ public class SQLConnectionURL {
 				
 	        } catch (Exception ex) {
 	            ex.printStackTrace();
-	        }
-			
-			return conn;
-		}		
+	        }			
+		}	
+		
+		// Return the connection
+		return conn;
 	}
 	
 	/*

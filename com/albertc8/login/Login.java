@@ -19,10 +19,10 @@ public class Login {
 	private final String instance = "SQLEXPRESS";
 	private final String database = "DMSDB";
 	
-	private String username;
-	private String password;
+	private String username; // the entered username
+	private String password; // the entered password
 	
-	private String errMesg;
+	private String errMesg; // Error message
 		
 	public Login() {
 		
@@ -78,7 +78,8 @@ public class Login {
 		ResultSet rs = null; // Read SQL results
 				
 		boolean validLogin = false; // Flag if user name is found in users table
-				
+		errMesg = "";
+		
 		if (sqlConnectionURL == null) {
 			// Create the connection
 			sqlConnectionURL = new SQLConnectionURL(server, instance, database);

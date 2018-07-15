@@ -14,7 +14,7 @@ import com.albertc8.database.SQLConnectionURL;
 
 public class Login {
 	
-	// TODO - these needs to be moved to a parameter table
+	// TODO - these needs read from connection XML file
 	private final String server = "DESKTOP-T4119UA";
 	private final String instance = "SQLEXPRESS";
 	private final String database = "DMSDB";
